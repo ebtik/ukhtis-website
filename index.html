@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKHTIS — أُختيز | By Sisters, For Sisters</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:wght@400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --sand: #e8dccb;
+    --sand-light: #f2ebe0;
+    --sand-dark: #d4c4ad;
+    --ink: #1a1612;
+    --ink-soft: #3a322a;
+    --gold: #b8914a;
+    --gold-light: #d4aa6a;
+    --blush: #c9a99a;
+    --white: #faf8f4;
+    --border: rgba(26,22,18,0.15);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--sand-light); color: var(--ink); font-family: 'EB Garamond', serif; font-size: 18px; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.6; }
+
+  /* ANNOUNCEMENT BAR */
+  #announcement-bar { background: var(--gold); color: var(--white); text-align: center; padding: 0.6rem 1rem; font-size: 0.8rem; letter-spacing: 0.15em; display: none; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(242,235,224,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: top 0.3s; }
+  .nav-logo { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.3em; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-family: 'EB Garamond', serif; font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.05em; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 8rem 3rem 4rem; text-align: center; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse, rgba(184,145,74,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: 0; right: -10%; width: 50%; height: 60%; background: radial-gradient(ellipse, rgba(201,169,154,0.1) 0%, transparent 70%); pointer-events: none; }
+  .hero-content { position: relative; z-index: 2; animation: fadeUp 1.2s ease both; }
+  .hero-arabic { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3vw, 2rem); color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .hero-title { font-family: 'Cinzel', serif; font-size: clamp(4rem, 12vw, 9rem); font-weight: 600; letter-spacing: 0.12em; line-height: 0.9; color: var(--ink); margin-bottom: 0.3em; }
+  .hero-divider { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: 1.5rem auto; }
+  .hero-divider span { height: 1px; width: 80px; background: var(--gold); display: block; }
+  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.3rem, 3vw, 2rem); color: var(--ink-soft); letter-spacing: 0.08em; margin-bottom: 3rem; }
+  .hero-cta { display: inline-flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { background: var(--ink); color: var(--sand-light); padding: 1rem 2.5rem; font-family: 'EB Garamond', serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--ink); transition: all 0.3s; display: inline-block; cursor: pointer; }
+  .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+  .btn-outline { background: transparent; color: var(--ink); padding: 1rem 2.5rem; font-family: 'EB Garamond', serif; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--ink); transition: all 0.3s; display: inline-block; }
+  .btn-outline:hover { background: var(--ink); color: var(--sand-light); }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft); opacity: 0.6; }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollLine 2s infinite; }
+  @keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* MARQUEE */
+  .marquee-section { background: var(--ink); color: var(--sand-light); padding: 1rem 0; overflow: hidden; }
+  .marquee-track { display: flex; animation: marquee 30s linear infinite; white-space: nowrap; }
+  .marquee-item { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; letter-spacing: 0.15em; padding: 0 2rem; color: var(--sand); flex-shrink: 0; }
+  .marquee-dot { color: var(--gold); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+  .section-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; color: var(--ink); line-height: 1.1; }
+  .section-title em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); }
+  .section-desc { margin-top: 1.2rem; color: var(--ink-soft); max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.8; font-size: 1.05rem; }
+
+  /* PRODUCTS */
+  .collections { padding: 7rem 3rem; }
+  .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+  .collection-card { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: var(--sand-dark); border: 1px solid var(--border); transition: transform 0.3s; }
+  .collection-card:hover { transform: translateY(-4px); }
+  .collection-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+  .collection-card:hover img { transform: scale(1.04); }
+  .card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 6rem; opacity: 0.15; background: linear-gradient(135deg, #c4b09a, #a8927a); }
+  .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,22,18,0.75) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem; }
+  .card-label { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.4rem; }
+  .card-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.3rem; }
+  .card-price { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(255,255,255,0.75); font-size: 1rem; }
+  .card-unavailable { opacity: 0.5; }
+  .card-badge { position: absolute; top: 1rem; right: 1rem; background: var(--gold); color: white; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.25rem 0.7rem; }
+
+  /* ABOUT */
+  .about-strip { padding: 7rem 3rem; background: var(--ink); color: var(--sand-light); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; position: relative; overflow: hidden; }
+  .about-strip::before { content: 'أُختيز'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-family: 'Cormorant Garamond', serif; font-size: 18rem; color: rgba(255,255,255,0.02); pointer-events: none; }
+  .about-text .section-label { color: var(--gold-light); }
+  .about-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--white); line-height: 1.2; margin-bottom: 1.5rem; }
+  .about-title em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold-light); }
+  .about-body { color: rgba(232,220,203,0.75); line-height: 2; font-size: 1.05rem; white-space: pre-line; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .stat-card { border: 1px solid rgba(184,145,74,0.25); padding: 2rem; text-align: center; transition: border-color 0.3s; }
+  .stat-card:hover { border-color: rgba(184,145,74,0.5); }
+  .stat-number { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--gold-light); display: block; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,220,203,0.5); }
+
+  /* SERVICES */
+  .services { padding: 7rem 3rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; max-width: 1200px; margin: 0 auto; background: var(--border); }
+  .service-card { background: var(--sand-light); padding: 3rem 2rem; text-align: center; transition: background 0.3s; position: relative; overflow: hidden; }
+  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s; }
+  .service-card:hover { background: var(--white); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon { font-size: 2.5rem; display: block; margin-bottom: 1.5rem; }
+  .service-name { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 1rem; }
+  .service-desc { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.8; opacity: 0.8; }
+  .service-tags { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+  .tag { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(184,145,74,0.4); padding: 0.2rem 0.6rem; }
+
+  /* PROCESS */
+  .process { padding: 7rem 3rem; background: var(--sand); }
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; max-width: 1100px; margin: 0 auto; position: relative; }
+  .process-steps::before { content: ''; position: absolute; top: 2rem; left: 12.5%; right: 12.5%; height: 1px; background: var(--gold); opacity: 0.4; }
+  .process-step { text-align: center; padding: 0 1.5rem; }
+  .step-number { width: 4rem; height: 4rem; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); background: var(--sand); position: relative; z-index: 1; }
+  .step-title { font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 0.8rem; }
+  .step-desc { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.8; opacity: 0.85; }
+
+  /* COMING SOON */
+  .coming-soon { padding: 7rem 3rem; text-align: center; }
+  .coming-grid { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+  .coming-card { border: 1px solid var(--border); padding: 2.5rem 3rem; text-align: center; position: relative; flex: 1; min-width: 200px; max-width: 260px; transition: border-color 0.3s, transform 0.3s; }
+  .coming-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .coming-badge { position: absolute; top: -0.7rem; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--white); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.8rem; white-space: nowrap; }
+  .coming-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+  .coming-name { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 0.5rem; }
+  .coming-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--ink-soft); opacity: 0.7; }
+
+  /* CTA */
+  .cta-banner { padding: 8rem 3rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(184,145,74,0.08) 0%, transparent 70%); }
+  .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 7vw, 5rem); font-style: italic; color: var(--ink); line-height: 1.1; margin-bottom: 1.5rem; position: relative; }
+  .cta-subtitle { font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 3rem; position: relative; }
+  .cta-note { margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--ink-soft); font-size: 1rem; position: relative; }
+
+  /* FOOTER */
+  footer { background: var(--ink); color: var(--sand); padding: 4rem 3rem 2rem; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-brand-name { font-family: 'Cinzel', serif; font-size: 1.8rem; letter-spacing: 0.2em; color: var(--white); margin-bottom: 0.3rem; }
+  .footer-brand-arabic { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-light); margin-bottom: 1rem; }
+  .footer-brand-desc { font-size: 0.9rem; line-height: 1.8; color: rgba(232,220,203,0.55); max-width: 280px; }
+  .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.5rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-links a { color: rgba(232,220,203,0.55); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(232,220,203,0.3); letter-spacing: 0.1em; }
+  .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--gold); font-size: 0.95rem; }
+
+  /* WHATSAPP */
+  .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; width: 3.5rem; height: 3.5rem; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; z-index: 200; box-shadow: 0 4px 20px rgba(37,211,102,0.4); animation: pulse 3s infinite; transition: transform 0.3s; }
+  .whatsapp-float:hover { transform: scale(1.1); }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 30px rgba(37,211,102,0.7); } }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* LOADING */
+  .loading { opacity: 0.4; pointer-events: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .nav-tagline { display: none; }
+    .collection-grid { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .process-steps::before { display: none; }
+    .about-strip { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .collection-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body class="loading">
+
+<div id="announcement-bar"></div>
+
+<nav id="main-nav">
+  <a href="#" class="nav-logo" id="nav-logo">UKHTIS</a>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Custom Order</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-tagline" id="nav-tagline">by sister, for sisters</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-arabic" id="hero-arabic">أُختيز</p>
+    <h1 class="hero-title" id="hero-title">UKHTIS</h1>
+    <div class="hero-divider"><span></span><span>✦</span><span></span></div>
+    <p class="hero-tagline" id="hero-tagline">by sister, for sisters</p>
+    <div class="hero-cta">
+      <a href="#collections" class="btn-primary">Shop Abayas</a>
+      <a href="#services" class="btn-outline">Custom Stitching</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Explore</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<section class="collections" id="collections">
+  <div class="section-header reveal">
+    <span class="section-label">New Arrivals</span>
+    <h2 class="section-title">The <em>Abaya</em> Collection</h2>
+    <p class="section-desc">Modest elegance reimagined for the modern woman. Crafted with intention, worn with grace.</p>
+  </div>
+  <div class="collection-grid reveal" id="products-grid">
+    <!-- Loaded dynamically -->
+  </div>
+</section>
+
+<section class="about-strip" id="about">
+  <div class="about-text">
+    <span class="section-label">Our Story</span>
+    <h2 class="about-title" id="about-title">Born from sisterhood,<br><em>built with love</em></h2>
+    <div class="about-body" id="about-body"></div>
+  </div>
+  <div class="about-stats reveal">
+    <div class="stat-card"><span class="stat-number" id="stat-products">2</span><span class="stat-label">Abaya Styles Launched</span></div>
+    <div class="stat-card"><span class="stat-number">4+</span><span class="stat-label">Occasion Categories</span></div>
+    <div class="stat-card"><span class="stat-number">✦</span><span class="stat-label">Hand & Machine Embroidery</span></div>
+    <div class="stat-card"><span class="stat-number">∞</span><span class="stat-label">Custom Possibilities</span></div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">Crafted for <em>Every Occasion</em></h2>
+    <p class="section-desc">From everyday ease to your most memorable moments — we stitch it all with care.</p>
+  </div>
+  <div class="services-grid reveal" id="services-grid"></div>
+</section>
+
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-title">Your Custom <em>Journey</em></h2>
+    <p class="section-desc">Ordering your custom piece is simple. We guide you every step of the way.</p>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step"><div class="step-number">01</div><h3 class="step-title">Consult</h3><p class="step-desc">DM us on Instagram or WhatsApp with your requirements, occasion & fabric preferences.</p></div>
+    <div class="process-step"><div class="step-number">02</div><h3 class="step-title">Design</h3><p class="step-desc">We discuss style, embroidery details, neckline, and share references together.</p></div>
+    <div class="process-step"><div class="step-number">03</div><h3 class="step-title">Craft</h3><p class="step-desc">Our skilled artisans bring your vision to life with precision and care.</p></div>
+    <div class="process-step"><div class="step-number">04</div><h3 class="step-title">Deliver</h3><p class="step-desc">Your finished piece is packaged beautifully and delivered across Karachi.</p></div>
+  </div>
+</section>
+
+<section class="coming-soon">
+  <div class="section-header reveal">
+    <span class="section-label">On the Horizon</span>
+    <h2 class="section-title">Coming <em>Soon</em></h2>
+    <p class="section-desc">We're growing — new segments are being lovingly put together for you.</p>
+  </div>
+  <div class="coming-grid reveal" id="coming-grid"></div>
+</section>
+
+<section class="cta-banner" id="contact">
+  <div class="reveal">
+    <p class="cta-subtitle">Ready to Order?</p>
+    <h2 class="cta-title">"Your perfect piece<br>awaits, sister."</h2>
+    <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;">
+      <a href="https://www.instagram.com/ukhtis.co/" target="_blank" class="btn-primary">DM on Instagram</a>
+      <a id="wa-btn" href="#" target="_blank" class="btn-outline">WhatsApp Us</a>
+    </div>
+    <p class="cta-note">Delivering across Karachi · Custom orders welcome</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">UKHTIS</div>
+      <div class="footer-brand-arabic">أُختيز</div>
+      <p class="footer-brand-desc" id="footer-desc">By sisters, for sisters. Modest fashion crafted with love for the modern Karachi woman.</p>
+    </div>
+    <div>
+      <h4 class="footer-col-title">Shop</h4>
+      <ul class="footer-links">
+        <li><a href="#collections">Abayas</a></li>
+        <li><a href="#services">Pakistani Suits</a></li>
+        <li><a href="#process">Custom Orders</a></li>
+        <li><a href="#collections">New Arrivals</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="footer-col-title">Services</h4>
+      <ul class="footer-links">
+        <li><a href="#services">Custom Stitching</a></li>
+        <li><a href="#services">Bridal Wear</a></li>
+        <li><a href="#services">Hand Embroidery</a></li>
+        <li><a href="#services">Machine Embroidery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="footer-col-title">Connect</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/ukhtis.co/" target="_blank">Instagram</a></li>
+        <li><a id="footer-wa" href="#">WhatsApp</a></li>
+        <li><a href="#">Karachi, Pakistan</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Ukhtis. All rights reserved.</span>
+    <span class="footer-tagline">by sister, for sisters ✦</span>
+    <span>Karachi, Pakistan</span>
+  </div>
+</footer>
+
+<a id="whatsapp-float" href="#" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+// ─── Load JSON data files ───────────────────────────────────────────────────
+
+async function loadJSON(path) {
+  try {
+    const r = await fetch(path);
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+async function loadFolder(folder) {
+  // Load manifest index then individual files
+  try {
+    const idx = await fetch(`/_data/${folder}/index.json`);
+    if (idx.ok) {
+      const list = await idx.json();
+      const items = await Promise.all(list.map(f => loadJSON(`/_data/${folder}/${f}`)));
+      return items.filter(Boolean);
+    }
+  } catch {}
+  return [];
+}
+
+// ─── Render functions ────────────────────────────────────────────────────────
+
+function renderSettings(s) {
+  if (!s) return;
+  document.title = `${s.site_title} — أُختيز | By Sisters, For Sisters`;
+  setText('hero-arabic', s.hero_arabic);
+  setText('hero-title', s.hero_title);
+  setText('hero-tagline', s.hero_tagline);
+  setText('nav-logo', s.site_title);
+  setText('nav-tagline', s.tagline);
+  setText('footer-desc', s.footer_desc);
+
+  // About
+  const aboutTitle = document.getElementById('about-title');
+  if (aboutTitle && s.about_title) aboutTitle.innerHTML = s.about_title.replace(/,\s*/, ',<br><em>') + '</em>';
+  setText('about-body', s.about_body);
+
+  // WhatsApp links
+  const wa = `https://wa.me/${s.whatsapp}`;
+  ['wa-btn','footer-wa','whatsapp-float'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = wa;
+  });
+}
+
+function renderAnnouncements(items) {
+  const bar = document.getElementById('announcement-bar');
+  const active = items.filter(i => i.active);
+  if (active.length) {
+    bar.textContent = active[0].message;
+    bar.style.display = 'block';
+    // push nav down
+    document.querySelector('nav').style.top = bar.offsetHeight + 'px';
+  }
+}
+
+function renderProducts(items) {
+  const grid = document.getElementById('products-grid');
+  if (!grid) return;
+  if (!items.length) {
+    // Fallback placeholders
+    grid.innerHTML = `
+      <div class="collection-card"><div class="card-placeholder">🧕</div><div class="card-overlay"><span class="card-label">Signature Piece</span><h3 class="card-title">Classic Abaya</h3></div></div>
+      <div class="collection-card"><div class="card-placeholder">✨</div><div class="card-overlay"><span class="card-label">Design 01</span><h3 class="card-title">Embellished Abaya</h3></div></div>
+      <div class="collection-card"><div class="card-placeholder">🌸</div><div class="card-overlay"><span class="card-label">Coming Soon</span><h3 class="card-title">New Designs</h3></div></div>
+    `;
+    return;
+  }
+  const stat = document.getElementById('stat-products');
+  if (stat) stat.textContent = items.filter(i => i.available).length;
+
+  grid.innerHTML = items.map(p => `
+    <div class="collection-card ${!p.available ? 'card-unavailable' : ''}">
+      ${!p.available ? '<span class="card-badge">Sold Out</span>' : ''}
+      ${p.image
+        ? `<img src="${p.image}" alt="${p.title}" loading="lazy">`
+        : `<div class="card-placeholder">🧕</div>`}
+      <div class="card-overlay">
+        <span class="card-label">${p.label || 'New Arrival'}</span>
+        <h3 class="card-title">${p.title}</h3>
+        ${p.price ? `<span class="card-price">PKR ${p.price}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderServices(items) {
+  const grid = document.getElementById('services-grid');
+  if (!grid) return;
+  const defaults = [
+    { icon: '🧵', title: 'Custom Stitching', description: 'Pakistani ladies suits tailored precisely to your measurements.', tags: ['Daily Wear','Office','Party'] },
+    { icon: '👰', title: 'Bridal Wear', description: 'Your dream bridal ensemble, handcrafted from consultation to final fitting.', tags: ['Bridal','Formal'] },
+    { icon: '🌸', title: 'Hand Embroidery', description: 'Artisanal embroidery worked by skilled hands, stitch by careful stitch.', tags: ['Handmade','Artisan'] },
+    { icon: '⚙️', title: 'Machine Embroidery', description: 'Precision machine embroidery for detailed, consistent results.', tags: ['Precision','Detailed'] },
+  ];
+  const list = items.length ? items : defaults;
+  grid.innerHTML = list.map(s => `
+    <div class="service-card">
+      <span class="service-icon">${s.icon}</span>
+      <h3 class="service-name">${s.title}</h3>
+      <p class="service-desc">${s.description}</p>
+      <div class="service-tags">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function renderComingSoon(items) {
+  const grid = document.getElementById('coming-grid');
+  if (!grid) return;
+  const defaults = [
+    { icon: '💄', title: 'Cosmetics', note: 'Beauty, curated for sisters' },
+    { icon: '🌹', title: 'Fragrances', note: 'Scents that stay with you' },
+    { icon: '👗', title: 'Coord Sets', note: 'Effortless, coordinated looks' },
+  ];
+  const list = items.length ? items : defaults;
+  grid.innerHTML = list.map(c => `
+    <div class="coming-card">
+      <span class="coming-badge">Coming Soon</span>
+      <span class="coming-icon">${c.icon}</span>
+      <h3 class="coming-name">${c.title}</h3>
+      <p class="coming-note">${c.note}</p>
+    </div>
+  `).join('');
+}
+
+function renderMarquee(services) {
+  const track = document.getElementById('marquee-track');
+  const items = services.length
+    ? services.map(s => s.title)
+    : ['Abayas','Custom Stitching','Pakistani Suits','Hand Embroidery','Bridal Wear','Machine Embroidery','Party Wear','Office Wear'];
+  const doubled = [...items, ...items];
+  track.innerHTML = doubled.map(i =>
+    `<span class="marquee-item">${i} <span class="marquee-dot">✦</span></span>`
+  ).join('');
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el && val) el.textContent = val;
+}
+
+// ─── Reveal on scroll ────────────────────────────────────────────────────────
+function initReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+}
+
+// ─── Nav scroll ──────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 50 ? '0 2px 30px rgba(26,22,18,0.12)' : 'none';
+});
+
+// ─── Netlify Identity (for CMS login redirect) ───────────────────────────────
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', user => {
+    if (!user) {
+      window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+    }
+  });
+}
+
+// ─── Bootstrap ───────────────────────────────────────────────────────────────
+async function init() {
+  const [settings, products, services, comingSoon, announcements] = await Promise.all([
+    loadJSON('/_data/settings.json'),
+    loadFolder('abayas'),
+    loadFolder('services'),
+    loadFolder('coming_soon'),
+    loadFolder('announcements'),
+  ]);
+
+  renderSettings(settings);
+  renderAnnouncements(announcements);
+  renderProducts(products);
+  renderServices(services);
+  renderComingSoon(comingSoon);
+  renderMarquee(services);
+
+  document.body.classList.remove('loading');
+  initReveal();
+}
+
+init();
+</script>
+</body>
+</html>

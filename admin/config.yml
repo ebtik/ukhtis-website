@@ -1,0 +1,72 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+
+  - name: "settings"
+    label: "⚙️ Site Settings"
+    files:
+      - label: "General Settings"
+        name: "general"
+        file: "_data/settings.json"
+        fields:
+          - { label: "Site Title", name: "site_title", widget: "string", default: "UKHTIS" }
+          - { label: "Tagline", name: "tagline", widget: "string", default: "by sister, for sisters" }
+          - { label: "WhatsApp Number (with country code, no +)", name: "whatsapp", widget: "string", default: "923000000000" }
+          - { label: "Instagram Handle", name: "instagram", widget: "string", default: "ukhtis.co" }
+          - { label: "Hero Title", name: "hero_title", widget: "string", default: "UKHTIS" }
+          - { label: "Hero Arabic Text", name: "hero_arabic", widget: "string", default: "أُختيز" }
+          - { label: "Hero Tagline", name: "hero_tagline", widget: "string", default: "by sister, for sisters" }
+          - { label: "About Title", name: "about_title", widget: "string", default: "Born from sisterhood, built with love" }
+          - { label: "About Body", name: "about_body", widget: "text", default: "Ukhtis — meaning my sisters — is more than a label. Built in Karachi, for the Karachi woman." }
+          - { label: "Footer Description", name: "footer_desc", widget: "text", default: "By sisters, for sisters. Modest fashion crafted with love for the modern Karachi woman." }
+
+  - name: "abayas"
+    label: "🧕 Abayas"
+    folder: "_data/abayas"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Product Name", name: "title", widget: "string" }
+      - { label: "Label (e.g. New Arrival)", name: "label", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Price (PKR)", name: "price", widget: "string" }
+      - { label: "Product Image", name: "image", widget: "image" }
+      - { label: "Available", name: "available", widget: "boolean", default: true }
+
+  - name: "services"
+    label: "✂️ Services"
+    folder: "_data/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Service Name", name: "title", widget: "string" }
+      - { label: "Icon (emoji)", name: "icon", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        field: { label: "Tag", name: "tag", widget: "string" }
+
+  - name: "coming_soon"
+    label: "🔮 Coming Soon"
+    folder: "_data/coming_soon"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "title", widget: "string" }
+      - { label: "Icon (emoji)", name: "icon", widget: "string" }
+      - { label: "Tagline", name: "note", widget: "string" }
+
+  - name: "announcements"
+    label: "📢 Announcements"
+    folder: "_data/announcements"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Message", name: "message", widget: "string" }
+      - { label: "Active", name: "active", widget: "boolean", default: true }
